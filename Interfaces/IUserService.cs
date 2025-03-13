@@ -13,5 +13,6 @@ namespace Titube.Interfaces
         Task<bool> DeleteUserAsync(int userId);
         
         Task<User> AuthenticateAsync(string usernameOrEmail, string password);
+        Task<User> UpgradeToAdminAsync(int userId);
     }
 }

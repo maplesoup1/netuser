@@ -67,5 +67,14 @@ namespace Titube.Repository
         {
             return await _context.Users.AnyAsync(u => u.Username == username);
         }
+
+        public async Task<User> UpgradeToAdmin(int userId)
+        {
+            var user = await GetByIdAsync(userId);
+            user.Role = UserRole.Admin;
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            return user;
+        }
     }
 }

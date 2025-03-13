@@ -158,6 +158,24 @@ namespace Titube.Services
             }
         }
 
+        public async Task<User> UpgradeToAdminAsync(int userId)
+        {
+            try
+            {
+                var user = await _userRepository.UpgradeToAdmin(userId);
+                if (user == null)
+                {
+                    _logger.LogWarning("User with ID {UserId} not found", userId);
+                    return null;
+                }
+                return user;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error upgrading user with ID {UserId} to admin", userId);
+                throw;
+            }
+        }
     }
 
 }

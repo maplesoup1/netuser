@@ -77,5 +77,31 @@ namespace Titube.Controller
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpPut("{userId}")]
+        public async Task<ActionResult<UserDto>> UpdateUserAsync(int userId, UserUpdateDto userUpdateDto)
+        {
+            try
+            {
+                var user = await _userService.GetUserByIdAsync(userId);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                _mapper.Map(userUpdateDto, user);
+
+                var updatedUser = await _userService.UpdateUserAsync(user);
+
+                var resultDto = _mapper.Map<UserDto>(updatedUser);
+
+                return Ok(resultDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating user with ID {UserId}", userId);
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }

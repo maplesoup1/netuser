@@ -12,6 +12,7 @@ namespace Titube.Interfaces
 
         Task<User> GetByUsernameAsync(string username);
         Task<User> GetByEmailAsync(string email);
+        Task<User> UpgradeToAdmin(int userId);
         Task<bool> EmailExists(string email);
         Task<bool> UsernameExists(string username);
     }
