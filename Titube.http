@@ -1,0 +1,6 @@
+@Titube_HostAddress = http://localhost:5247
+
+GET {{Titube_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
