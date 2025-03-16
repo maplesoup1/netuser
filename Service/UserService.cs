@@ -1,6 +1,7 @@
 using Titube.Entities;
 using Titube.Interfaces;
 using System.Security.Cryptography;
+
 namespace Titube.Services
 {
     public class UserService : IUserService

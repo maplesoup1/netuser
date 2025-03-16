@@ -19,5 +19,6 @@ namespace Titube.Entities
 
         public UserRole Role { get; set; } = UserRole.Regular;
         public DateTime CreatedAt { get; set; }
+        public virtual ICollection<Media> Medias { get; set; } = new List<Media>();
     }
 }

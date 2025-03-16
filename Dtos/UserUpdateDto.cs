@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Titube.Dtos
 {
-    public enum UserRole
+    public enum UserRoleDto
     {
         Regular = 0,
         Admin = 1
@@ -16,6 +16,6 @@ namespace Titube.Dtos
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
         
-        public UserRole? Role { get; set; }
+        public UserRoleDto? Role { get; set; }
     }
 }
