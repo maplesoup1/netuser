@@ -140,12 +140,8 @@ namespace Titube.Services
         {
             try
             {
-                User user = await _userRepository.GetByUsernameAsync(usernameOrEmail);
+                User user = await _userRepository.GetByEmailAsync(usernameOrEmail);
 
-                if (user == null)
-                {
-                    user = await _userRepository.GetByEmailAsync(usernameOrEmail);
-                }
                 if (user == null || !VerifyPassword(password, user.Password))
                 {
                     return null;
@@ -176,6 +172,26 @@ namespace Titube.Services
                 _logger.LogError(ex, "Error upgrading user with ID {UserId} to admin", userId);
                 throw;
             }
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            try
+            {
+                var user = await _userRepository.GetByEmailAsync(email);
+                if (user == null)
+                {
+                    _logger.LogWarning("User with email {email} not found", email);
+                    return null;
+                }
+                return user;
+            }
+                catch(Exception ex)
+                {
+                    _logger.LogError(ex, "Error get user by email");
+                    throw;
+                }
+
         }
     }
 

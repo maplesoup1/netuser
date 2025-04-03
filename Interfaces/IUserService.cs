@@ -8,6 +8,7 @@ namespace Titube.Interfaces
     {
         Task<User> GetUserByIdAsync(int userId);
         Task<IEnumerable<User>> GetAllUsersAsync();
+        Task<User> GetUserByEmail(string email);
         Task<User> CreateUserAsync(User user);
         Task<User> UpdateUserAsync(User user);
         Task<bool> DeleteUserAsync(int userId);

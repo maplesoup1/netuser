@@ -255,3 +255,12 @@ F:\tt project\Titube\bin\Debug\net8.0\Google.Cloud.Storage.V1.dll
 F:\tt project\Titube\bin\Debug\net8.0\Newtonsoft.Json.dll
 F:\tt project\Titube\bin\Debug\net8.0\System.Management.dll
 F:\tt project\Titube\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Management.dll
+F:\tt project\Titube\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+F:\tt project\Titube\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll
+F:\tt project\Titube\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+F:\tt project\Titube\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+F:\tt project\Titube\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+F:\tt project\Titube\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+F:\tt project\Titube\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+F:\tt project\Titube\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+F:\tt project\Titube\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Titube")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f05bcf8a5e9b5f04c134b9e3e236d75c52c75178")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9dd9039c3751f78b007452f86b7b84ea34c6391e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Titube")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Titube")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

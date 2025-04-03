@@ -3,6 +3,8 @@ using Titube.Entities;
 using Titube.Interfaces;
 using Titube.Dtos;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Titube.Helper;
 
 
 
@@ -13,14 +15,17 @@ namespace Titube.Controller
         private readonly IUserService _userService;
         private readonly ILogger<UserController> _logger;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _config;
 
-        public UserController(IUserService userService, ILogger<UserController> logger, IMapper mapper)
+        public UserController(IUserService userService, ILogger<UserController> logger, IMapper mapper, IConfiguration config)
         {
             _userService = userService;
             _logger = logger;
             _mapper = mapper;
+            _config = config;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
         {
@@ -36,6 +41,7 @@ namespace Titube.Controller
                 return StatusCode(500, "Internal server error");
             }
         }
+
 
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> CreateUserAsync(UserCreateDto userCreateDto)
@@ -57,6 +63,7 @@ namespace Titube.Controller
             }
         }
 
+        [Authorize]
         [HttpGet("{userId}")]
         public async Task<ActionResult<UserDto>> GetUserById(int userId)
         {
@@ -78,6 +85,7 @@ namespace Titube.Controller
             }
         }
 
+        [Authorize]
         [HttpPut("{userId}")]
         public async Task<ActionResult<UserDto>> UpdateUserAsync(int userId, UserUpdateDto userUpdateDto)
         {
@@ -101,6 +109,43 @@ namespace Titube.Controller
             {
                 _logger.LogError(ex, "Error updating user with ID {UserId}", userId);
                 return StatusCode(500, "Internal server error");
+            }
+        }
+
+
+        [HttpPost("login")]
+        public async Task<ActionResult<UserAuthenticationDto>> UserLogin(UserAuthenticationDto loginDto)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(loginDto.Email) || string.IsNullOrEmpty(loginDto.Password))
+                {
+                    return BadRequest(new { message = "Email and password are required" });
+                }
+                var user = await _userService.AuthenticateAsync(loginDto.Email, loginDto.Password);
+                if (user == null)
+                {
+                    return Unauthorized(new { message = "Invalid email or password" });
+                }
+                var token = JwtHelper.GenerateToken(loginDto.Email, _config["JwtSettings:Secret"]);
+                var userDto = new UserDto
+                {   
+                    Id = user.Id,
+                    Username = user.Username,
+                    Email = user.Email,
+                };
+
+                var response = new UserLoginResponseDto
+                {
+                    Token = token,
+                    User = userDto
+                };
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error during login for {Email}", loginDto.Email);
+                return StatusCode(500, new { message = ex.Message });
             }
         }
     }

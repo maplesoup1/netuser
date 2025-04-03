@@ -56,7 +56,7 @@ namespace Titube.Controllers
 
             var media = new Media
             {
-                UserId = 1, // 简化版直接使用固定ID，实际应用中应从认证中获取
+                UserId = 1,
                 FileName = file.FileName,
                 FilePath = filePath,
                 FileDescription = "",
