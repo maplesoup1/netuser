@@ -1,0 +1,73 @@
+# .NET Core项目专用.gitignore
+
+# 构建结果目录
+bin/
+obj/
+
+# Visual Studio生成的文件
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pfx
+*.publishsettings
+**/Properties/PublishProfiles/
+**/Properties/ServiceDependencies/
+orleans.codegen.cs
+
+# 本地配置文件
+appsettings.Development.json
+appsettings.local.json
+.env
+.env.local
+
+# 日志文件
+Logs/
+*.log
+
+# 依赖性管理器
+.nuget/
+packages/
+
+# 构建过程文件
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# IDE文件
+.vscode/
+.idea/
+
+# NuGet
+*.nupkg
+# NuGet Symbol包
+*.snupkg
+# NuGet包文件夹
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# 用户特定文件
+*.rsuser
+
+# 缓存文件
+*.cache
+*.dtbcache
+*.dotnet/
+
+# 测试结果
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# 数据库文件
+*.mdf
+*.ldf
+*.ndf
+
+# 临时文件
+.DS_Store
+*~
+Thumbs.db

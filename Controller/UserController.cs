@@ -5,6 +5,7 @@ using Titube.Dtos;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Titube.Helper;
+using Titube.Services;
 
 
 
@@ -16,13 +17,15 @@ namespace Titube.Controller
         private readonly ILogger<UserController> _logger;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
+        private readonly IVerificationService _verificationService;
 
-        public UserController(IUserService userService, ILogger<UserController> logger, IMapper mapper, IConfiguration config)
+        public UserController(IUserService userService, ILogger<UserController> logger, IMapper mapper, IConfiguration config, IVerificationService verificationService)
         {
             _userService = userService;
             _logger = logger;
             _mapper = mapper;
             _config = config;
+            _verificationService = verificationService;
         }
 
         [Authorize]
@@ -48,12 +51,15 @@ namespace Titube.Controller
         {
             try
             {
+                var isCodeValid = await _verificationService.VerifyCode(userCreateDto.Email, userCreateDto.VerificationCode);
+                if (!isCodeValid)
+                {
+                    return BadRequest(new { message = "Invalid or expired verification code." });
+                }
+
                 var user = _mapper.Map<User>(userCreateDto);
-
                 var createdUser = await _userService.CreateUserAsync(user);
-
                 var resultDto = _mapper.Map<UserDto>(createdUser);
-
                 return CreatedAtAction(nameof(GetUserById), new { userId = resultDto.Id }, resultDto);
             }
             catch (Exception ex)
@@ -61,6 +67,24 @@ namespace Titube.Controller
                 _logger.LogError(ex, "Error registering user");
                 return StatusCode(500, "Internal server error");
             }
+        }
+
+        [HttpPost("send-verification-code")]
+        public async Task<IActionResult> SendVerificationCode([FromBody] SendVerificationRequestDto request)
+        {
+            if (string.IsNullOrEmpty(request.Email))
+            {
+                return BadRequest(new { message = "Email is required." });
+            }
+
+            var result = await _verificationService.SendVerificationCode(request.Email);
+
+            if (result)
+            {
+                return Ok(new { message = "Verification code sent to email." });
+            }
+
+            return StatusCode(500, new { message = "Failed to send verification code." });
         }
 
         [Authorize]

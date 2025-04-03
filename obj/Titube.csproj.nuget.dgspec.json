@@ -56,6 +56,10 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "DotNetEnv": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
             "Google.Cloud.Storage.V1": {
               "target": "Package",
               "version": "[4.11.0, )"
@@ -86,7 +90,11 @@
             },
             "Microsoft.Extensions.Caching.Memory": {
               "target": "Package",
-              "version": "[8.0.13, )"
+              "version": "[9.0.3, )"
+            },
+            "Microsoft.Extensions.Caching.StackExchangeRedis": {
+              "target": "Package",
+              "version": "[9.0.2, )"
             },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
@@ -95,6 +103,10 @@
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[8.0.3, )"
+            },
+            "Resend": {
+              "target": "Package",
+              "version": "[0.1.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

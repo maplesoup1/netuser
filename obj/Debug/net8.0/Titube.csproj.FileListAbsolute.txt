@@ -264,3 +264,9 @@ F:\tt project\Titube\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
 F:\tt project\Titube\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 F:\tt project\Titube\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 F:\tt project\Titube\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+F:\tt project\Titube\bin\Debug\net8.0\DotNetEnv.dll
+F:\tt project\Titube\bin\Debug\net8.0\Resend.dll
+F:\tt project\Titube\bin\Debug\net8.0\Sprache.dll
+F:\tt project\Titube\bin\Debug\net8.0\Microsoft.Extensions.Caching.StackExchangeRedis.dll
+F:\tt project\Titube\bin\Debug\net8.0\Pipelines.Sockets.Unofficial.dll
+F:\tt project\Titube\bin\Debug\net8.0\StackExchange.Redis.dll

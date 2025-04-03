@@ -7,11 +7,19 @@ using Titube.Interfaces;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using DotNetEnv;
+using Resend;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Options;
 
 
 
 var builder = WebApplication.CreateBuilder(args);
 
+Env.Load();
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddEndpointsApiExplorer();
@@ -44,6 +52,16 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+
+builder.Services.AddOptions();
+builder.Services.AddHttpClient<ResendClient>();
+builder.Services.Configure<ResendClientOptions>( o =>
+{
+    o.ApiToken = Environment.GetEnvironmentVariable( "RESEND_APITOKEN" )!;
+} );
+builder.Services.AddTransient<IResend, ResendClient>();
+
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowMyOrigins",
@@ -60,7 +78,19 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStorageService, GoogleCloudStorageService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IVerificationService, VerificationService>();
+builder.Services.AddScoped<IResend>(provider =>
+{
+    var options = provider.GetRequiredService<IOptionsSnapshot<ResendClientOptions>>();
+    var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient();
+
+    return new ResendClient(options, httpClient);
+});
+builder.Services.AddSingleton<IDistributedCache, MemoryDistributedCache>();
 builder.Services.AddAuthorization();
+builder.Services.AddHttpClient();
 
 
 
@@ -90,6 +120,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+
 
 app.MapControllers();
 app.Run();
